@@ -1,0 +1,51 @@
+# Based on https://github.com/actions-rs/meta/blob/master/recipes/quickstart.md
+#
+# While our "example" application has the platform-specific code,
+# for simplicity we are compiling and testing everything on the Ubuntu environment only.
+# For multi-OS testing see the `cross.yml` workflow.
+
+on: [push, pull_request]
+
+name: noir_rs
+
+jobs:
+  fmt:
+    name: Fmt check
+    runs-on: ubuntu-latest
+    container:
+      image: docker.io/rust:latest
+    
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+        with:
+            submodules: 'true'
+
+      - name: Test
+        run: cargo fmt --check
+
+  test:
+    name: Build&Test
+    runs-on: ubuntu-latest
+    container:
+      image: docker.io/rust:latest
+    
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+        with:
+            submodules: 'true'
+      
+      - name: Install | Clang
+        run: apt update && apt install -y libclang-dev
+
+      - name: Install | CMake
+        uses: jwlawson/actions-setup-cmake@v1.13
+        with:
+          cmake-version: '3.24.0'
+
+      - name: Build
+        run: cargo build -vv
+        
+      - name: Test
+        run: cargo test -vv
