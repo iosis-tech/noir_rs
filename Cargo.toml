@@ -1,8 +1,10 @@
-[package]
+[workspace]
+members = ["aztec-packages/barretenberg/bb_rs"]
+resolver = "2"
 name = "noir_rs"
 version = "0.1.0"
 edition = "2021"
+authors = ["Bartosz Nowak"]
+
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
