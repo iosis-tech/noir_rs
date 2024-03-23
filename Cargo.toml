@@ -1,9 +1,8 @@
 [workspace]
-members = ["aztec-packages/barretenberg/bb_rs"]
+members = ["aztec-packages/barretenberg/bb_rs", "crates/noir_rs"]
 resolver = "2"
 
 [workspace.package]
-name = "noir_rs"
 version = "0.1.0"
 edition = "2021"
 authors = ["Bartosz Nowak"]
@@ -12,3 +11,7 @@ authors = ["Bartosz Nowak"]
 
 [workspace.dependencies]
 thiserror = "1.0.58"
+bb_rs = { path = "aztec-packages/barretenberg/bb_rs" }
+tracing = "0.1"
+tracing-subscriber = "0.3"
+reqwest = { version = "0.12.1", features = ["blocking"] }
