@@ -33,7 +33,10 @@ impl NetSrs {
         let g1_end: u32 = G1_START + num_points * 64 - 1;
 
         let mut headers = HeaderMap::new();
-        headers.insert(RANGE, format!("bytes={}-{}", G1_START, g1_end).parse().unwrap());
+        headers.insert(
+            RANGE,
+            format!("bytes={}-{}", G1_START, g1_end).parse().unwrap(),
+        );
 
         let response = Client::new()
             .get(
@@ -55,7 +58,10 @@ impl NetSrs {
         const G2_END: usize = G2_START + 128 - 1;
 
         let mut headers = HeaderMap::new();
-        headers.insert(RANGE, format!("bytes={}-{}", G2_START, G2_END).parse().unwrap());
+        headers.insert(
+            RANGE,
+            format!("bytes={}-{}", G2_START, G2_END).parse().unwrap(),
+        );
 
         let response = Client::new()
             .get(
