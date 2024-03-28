@@ -2,9 +2,8 @@ use acir::{
     native_types::{Witness, WitnessMap},
     FieldElement,
 };
-use bb_rs::barretenberg_api::traits::SerializeBuffer;
 use prove::prove;
-use tracing_subscriber;
+use tracing::info;
 use verify::verify;
 
 pub mod netsrs;
@@ -21,8 +20,6 @@ fn main() {
     initial_witness.insert(Witness(2), FieldElement::one());
 
     let (proof, vk) = prove(String::from(BYTECODE), initial_witness).unwrap();
-
-    // let verdict = verify(String::from(BYTECODE), proof, vk).unwrap();
-
-    // println!("{}", verdict);
+    let verdict = verify(String::from(BYTECODE), proof, vk).unwrap();
+    info!("proof verification verdict: {}", verdict);
 }

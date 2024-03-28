@@ -2,7 +2,10 @@ use std::io::Read;
 
 use base64::{engine::general_purpose, Engine};
 use bb_rs::barretenberg_api::{
-    acir::{acir_load_verification_key, acir_verify_proof, get_circuit_sizes, new_acir_composer},
+    acir::{
+        acir_load_verification_key, acir_verify_proof, delete_acir_composer, get_circuit_sizes,
+        new_acir_composer,
+    },
     srs::init_srs,
 };
 use flate2::bufread::GzDecoder;
@@ -25,7 +28,6 @@ pub fn verify(
         .map_err(|e| e.to_string())?;
 
     let circuit_size = unsafe { get_circuit_sizes(&acir_buffer_uncompressed) };
-    println!("{:?}", circuit_size);
     let log_value = (circuit_size.total as f64).log2().ceil() as u32;
     let subgroup_size = 2u32.pow(log_value);
 
@@ -33,6 +35,8 @@ pub fn verify(
     unsafe { init_srs(&srs.data, srs.num_points, &srs.g2_data) };
 
     let mut acir_ptr = unsafe { new_acir_composer(subgroup_size) };
-    // unsafe { acir_load_verification_key(&mut acir_ptr, &verification_key) };
-    Ok(unsafe { acir_verify_proof(&mut acir_ptr, &proof) })
+    unsafe { acir_load_verification_key(&mut acir_ptr, &verification_key) };
+    let result = unsafe { acir_verify_proof(&mut acir_ptr, &proof) };
+    unsafe { delete_acir_composer(acir_ptr) };
+    Ok(result)
 }
