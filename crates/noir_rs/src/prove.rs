@@ -38,30 +38,30 @@ pub fn prove(
         bincode::serialize(&solved_witness).map_err(|e| e.to_string())?;
 
     let circuit_size = unsafe { get_circuit_sizes(&acir_buffer_uncompressed) };
-    // println!("{:?}", circuit_size);
-    // let log_value = (circuit_size.total as f64).log2().ceil() as u32;
-    // let subgroup_size = 2u32.pow(log_value);
+    println!("{:?}", circuit_size);
+    let log_value = (circuit_size.total as f64).log2().ceil() as u32;
+    let subgroup_size = 2u32.pow(log_value);
 
-    // let srs = NetSrs::new(subgroup_size + 1);
-    // unsafe { init_srs(&srs.data, srs.num_points, &srs.g2_data) };
+    let srs = NetSrs::new(subgroup_size + 1);
+    unsafe { init_srs(&srs.data, srs.num_points, &srs.g2_data) };
 
-    // let mut acir_ptr = unsafe { new_acir_composer(subgroup_size) };
+    let mut acir_ptr = unsafe { new_acir_composer(subgroup_size) };
 
-    // unsafe { acir_init_proving_key(&mut acir_ptr, &acir_buffer_uncompressed) };
+    unsafe { acir_init_proving_key(&mut acir_ptr, &acir_buffer_uncompressed) };
 
-    // let proof = unsafe {
-    //     acir_create_proof(
-    //         &mut acir_ptr,
-    //         &acir_buffer_uncompressed,
-    //         &serialized_solved_witness,
-    //     )
-    // };
+    let proof = unsafe {
+        acir_create_proof(
+            &mut acir_ptr,
+            &acir_buffer_uncompressed,
+            &serialized_solved_witness,
+        )
+    };
 
-    // let verdict = unsafe { acir_verify_proof(&mut acir_ptr, &proof) };
+    let verdict = unsafe { acir_verify_proof(&mut acir_ptr, &proof) };
 
-    // println!("{}", verdict);
+    println!("{}", verdict);
 
-    // unsafe { delete_acir_composer(acir_ptr) };
+    unsafe { delete_acir_composer(acir_ptr) };
 
     todo!()
 }
