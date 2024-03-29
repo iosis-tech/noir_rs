@@ -43,24 +43,20 @@ pub fn prove(
     let subgroup_size = 2u32.pow(log_value);
 
     let srs = NetSrs::new(subgroup_size + 1);
-    unsafe { init_srs(&srs.data, srs.num_points, &srs.g2_data) };
 
-    let mut acir_ptr = unsafe { new_acir_composer(subgroup_size) };
-
-    unsafe { acir_init_proving_key(&mut acir_ptr, &acir_buffer_uncompressed) };
-
-    let result = unsafe {
-        (
+    Ok(unsafe {
+        init_srs(&srs.data, srs.num_points, &srs.g2_data);
+        let mut acir_ptr = new_acir_composer(subgroup_size);
+        acir_init_proving_key(&mut acir_ptr, &acir_buffer_uncompressed);
+        let result = (
             acir_create_proof(
                 &mut acir_ptr,
                 &acir_buffer_uncompressed,
                 &serialized_solved_witness,
             ),
             acir_get_verification_key(&mut acir_ptr),
-        )
-    };
-
-    unsafe { delete_acir_composer(acir_ptr) };
-
-    Ok(result)
+        );
+        delete_acir_composer(acir_ptr);
+        result
+    })
 }

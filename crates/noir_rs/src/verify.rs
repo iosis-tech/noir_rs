@@ -32,11 +32,13 @@ pub fn verify(
     let subgroup_size = 2u32.pow(log_value);
 
     let srs = NetSrs::new(subgroup_size + 1);
-    unsafe { init_srs(&srs.data, srs.num_points, &srs.g2_data) };
 
-    let mut acir_ptr = unsafe { new_acir_composer(subgroup_size) };
-    unsafe { acir_load_verification_key(&mut acir_ptr, &verification_key) };
-    let result = unsafe { acir_verify_proof(&mut acir_ptr, &proof) };
-    unsafe { delete_acir_composer(acir_ptr) };
-    Ok(result)
+    Ok(unsafe {
+        init_srs(&srs.data, srs.num_points, &srs.g2_data);
+        let mut acir_ptr = new_acir_composer(subgroup_size);
+        acir_load_verification_key(&mut acir_ptr, &verification_key);
+        let result = acir_verify_proof(&mut acir_ptr, &proof);
+        delete_acir_composer(acir_ptr);
+        result
+    })
 }
