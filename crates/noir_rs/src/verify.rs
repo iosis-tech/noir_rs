@@ -10,7 +10,7 @@ use bb_rs::barretenberg_api::{
 };
 use flate2::bufread::GzDecoder;
 
-use crate::netsrs::NetSrs;
+use crate::srs::netsrs::NetSrs;
 
 pub fn verify(
     circuit_bytecode: String,
@@ -34,7 +34,7 @@ pub fn verify(
     let srs = NetSrs::new(subgroup_size + 1);
 
     Ok(unsafe {
-        init_srs(&srs.data, srs.num_points, &srs.g2_data);
+        init_srs(&srs.g1_data, srs.num_points, &srs.g2_data);
         let mut acir_ptr = new_acir_composer(subgroup_size);
         acir_load_verification_key(&mut acir_ptr, &verification_key);
         let result = acir_verify_proof(&mut acir_ptr, &proof);

@@ -13,7 +13,7 @@ use bn254_blackbox_solver::Bn254BlackBoxSolver;
 use flate2::bufread::GzDecoder;
 use nargo::ops::execute::execute_circuit;
 
-use crate::netsrs::NetSrs;
+use crate::srs::netsrs::NetSrs;
 
 pub fn prove(
     circuit_bytecode: String,
@@ -45,7 +45,7 @@ pub fn prove(
     let srs = NetSrs::new(subgroup_size + 1);
 
     Ok(unsafe {
-        init_srs(&srs.data, srs.num_points, &srs.g2_data);
+        init_srs(&srs.g1_data, srs.num_points, &srs.g2_data);
         let mut acir_ptr = new_acir_composer(subgroup_size);
         acir_init_proving_key(&mut acir_ptr, &acir_buffer_uncompressed);
         let result = (
