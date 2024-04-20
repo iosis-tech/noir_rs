@@ -5,6 +5,6 @@ WORKDIR /app
 RUN apt-get update && \
     apt-get install -y \
     build-essential libssl-dev \
-    libclang-dev cmake
+    libclang-dev cmake pkg-config
 
 COPY . .
