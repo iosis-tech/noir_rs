@@ -1,4 +1,4 @@
-FROM rust:latest
+FROM rust:1.77.2 as base
 
 WORKDIR /app
 
@@ -8,5 +8,3 @@ RUN apt-get update && \
     libclang-dev cmake
 
 COPY . .
-
-RUN cargo build --release
