@@ -1,5 +1,5 @@
 [workspace]
-members = ["aztec-packages/barretenberg/bb_rs", "crates/nargo", "crates/noir_rs"]
+members = ["crates/nargo", "crates/noir_rs"]
 resolver = "2"
 
 [workspace.package]
@@ -13,14 +13,14 @@ authors = ["Bartosz Nowak"]
 acir = "0.41.0"
 acvm = "0.41.0"
 acvm_blackbox_solver = "0.41.0"
-bn254_blackbox_solver = "0.39.0"
 base64 = "0.22.0"
-bb_rs = { path = "aztec-packages/barretenberg/bb_rs" }
-noir_rs = { path = "crates/noir_rs" }
-nargo = { path = "crates/nargo" }
+bb_rs = {git = "https://github.com/Okm165/aztec-packages.git", branch = "v0.27.0"}
 bincode = "1.3.3"
+bn254_blackbox_solver = "0.39.0"
 flate2 = "1.0.28"
 hex = "0.4.3"
+nargo = { path = "crates/nargo" }
+noir_rs = { path = "crates/noir_rs" }
 reqwest = { version = "0.12.1", features = ["blocking"] }
 serde = "1.0.197"
 thiserror = "1.0.58"

@@ -1,4 +1,0 @@
-[submodule "aztec-packages"]
-	path = aztec-packages
-	url = https://github.com/Okm165/aztec-packages.git
-	branch = noir_rs
