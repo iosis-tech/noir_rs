@@ -33,7 +33,7 @@ pub fn prove(
         .expect("could not serialize witness map");
 
     let circuit = bincode::serialize(program.functions.first().unwrap()).unwrap();
-
+    println!("{:?}", circuit);
     let circuit_size = unsafe { get_circuit_sizes(&circuit) };
     
     // let log_value = (circuit_size.total as f64).log2().ceil() as u32;
