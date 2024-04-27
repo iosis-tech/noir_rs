@@ -7,7 +7,6 @@ authors.workspace = true
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-acir.workspace = true
 acvm_blackbox_solver.workspace = true
 acvm.workspace = true
 base64.workspace = true

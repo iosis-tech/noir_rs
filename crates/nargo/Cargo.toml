@@ -7,13 +7,12 @@ authors.workspace = true
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-acir.workspace = true
-acvm.workspace = true
 acvm_blackbox_solver.workspace = true
-bn254_blackbox_solver.workspace = true
+acvm.workspace = true
 base64.workspace = true
 bb_rs.workspace = true
 bincode.workspace = true
+bn254_blackbox_solver.workspace = true
 flate2.workspace = true
 hex.workspace = true
 reqwest.workspace = true
